@@ -13,11 +13,21 @@
 {% block context %}
     <div class="wrapper wrapper-content">
         <div class="row show-grid">
-            <div class="col-xs-4">
+ <div  class="container-fluid">
+     <div class="col-md-offset-3 left">
+                <a class="btn btn-primary" onclick="confirmdelete()" href="{% url 'users:index' %}">返回主页</a>
+            </div>
+ </div>
+
+            <div class="col-xs-4 ">
+
                 <form method="post" class="container">
                     <div class="form-group">
 
-                        <label for="exampleSelect1">XXXX</label>
+                        <label for="exampleSelect1">选择要修改的主机</label>
+
+                        <br>
+                        <br>
 
                         <select name="select" class="form-control" id="">
                             {% for host in all_host %}
@@ -31,6 +41,7 @@
                         <div>
                             <div class="bs-docs-example">
                                 <div class="bs-docs-example">
+
                                     <p>On each update event, a secondary field is updated with a specific date format.
                                         Both <code>id</code> and <code>format</code> can be specified.<br>
                                         The <code>reset</code> method will clear too this field.</p>
@@ -38,6 +49,8 @@
                                         <input name="js_date" type="text" value="" readonly="">
                                         <span class="add-on"><i class="icon-remove"></i></span>
                                         <span class="add-on"><i class="icon-th"></i></span>
+
+                                        <p class="error company-tips" id="jsCompanyTips"></p>
                                     </div>
                                     {#                                    <input type="text" id="mirror_field" value="" readonly="">#}
                                 </div>
@@ -47,23 +60,21 @@
 
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input type="checkbox" class="active">
+                                    <input  name="checkbox" type="checkbox" value="1">
                                     Check me out
                                 </label>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary onclick=confirmdelete()">Submit</button>
                         </div>
                         {% csrf_token %}
                     </div>
                 </form>
+             {{ msg|safe }}
             </div>
 
         </div>
 
     </div>
-
-
-
 
 
 {% endblock %}
@@ -72,18 +83,25 @@
 
 {% block js %}
     <script src="{% static 'datatime/jquery.js' %}"></script>
+    <script src="{% static 'datatime/bootstrap-datetimepicker.js' %}"></script>
+
+
+    <script type="text/JavaScript">
+        function confirmdelete() {
+            if (!confirm("确认操作么？")) {
+                window.event.returnValue = false;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+
+        $(".form_datetime4").datetimepicker({
+            format: "yyyy-mm-dd hh:ii",
+            todayBtn: true,
+            minuteStep: 5,
+
+        })
+    </script>
 
 
 {% endblock %}
-<script src="{% static 'datatime/bootstrap-datetimepicker.js' %}"></script>
-
-
-<script type="text/javascript">
-
-    $(".form_datetime4").datetimepicker({
-        format: "yyyy-mm-dd hh:ii",
-        todayBtn: true,
-        minuteStep: 5,
-
-    });
-</script>

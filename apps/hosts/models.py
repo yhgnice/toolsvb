@@ -28,6 +28,7 @@ class HostList(models.Model):
 	f_host_wan = models.CharField(max_length=50, verbose_name=u"wan_IP地址")
 	f_host_port = models.IntegerField(default='22', verbose_name=u"ssh")
 	f_host_pass = models.CharField(default=u'', verbose_name=u"密码", max_length=20)
+	f_host_user = models.CharField(default=u'root', verbose_name=u"用户", max_length=20)
 	host_context = models.TextField(max_length=100, default=u'', verbose_name=u"描述信息")
 	f_groups_id = models.ForeignKey(GroupHost, verbose_name=u"平台ID", null=False)
 	add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
@@ -35,6 +36,7 @@ class HostList(models.Model):
 	class Meta:
 		verbose_name = u"主机信息"
 		verbose_name_plural = verbose_name
+		unique_together=("f_host_id","f_host_domain")
 	
 	def __unicode__(self):
 		return self.f_host_domain
